@@ -1,1 +1,1 @@
-# AI-facial-recognition-module
+Beta 1.0
