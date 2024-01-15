@@ -1,1 +1,26 @@
+Semiconductors: 
 
+Atmega328P
+Attiny85
+LM386
+2x MCP2515
+2x TJA1050T
+
+Passive components: 
+
+C1: 22pF
+C2: 22pF
+C3, polarised: 10uF
+C4, polarised: 10uF
+C5, polarised: 220uF
+C6: 22pF
+C7: 22pF
+C8: 22pF
+C9: 22pF
+
+Other: 
+
+Husky lens AI camera
+Crystal 1: 8Mhz
+Crystal 2: 8Mhz
+Crystal 3: 8Mhz
