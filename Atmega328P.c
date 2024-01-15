@@ -41,5 +41,6 @@ void init_serial()
 	UCSR0B = (1<<RXEN0) | (1<<RXCIE0);
 	UCSROC = (1<<UCSZ01) | (1<<UCSZ00);
 	UBR0L = 0x67;
-	sei
+	sei;
+}
 
