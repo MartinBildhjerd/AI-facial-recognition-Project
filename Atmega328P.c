@@ -1,46 +1,41 @@
 #define F_CPU 8000000UL
 #define BAUD_RATE 9600
 #include <avr/io.h>
-#include <util/dalay.h>
+#include <util/delay.h>
 #include <string.h>
 #include <stdio.h>
 #include <xc.h>
 #include <avr/interrupt.h>
 
+unsigned DataIn;
 
-//serial communication function
 void init_serial()
-void init_Atmega328P_PORTS()
-unsigned DataIn; 
-
-ISR(UART_RX_vect) //ver 2
 {
-	DataIn = UDR0; 
-}
-
-int main void 
-{	
-	void init_Atmega328P_PORTS; 
-	void init_serial; 
-	
-		while(1)
-		{
-		
-		}
-	
+	UCSR0B = (1 << RXEN0) | (1 << RXCIE0);
+	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
+	UBRR0L = 0x67;
+	sei();
 }
 
 void init_Atmega328P_PORTS()
 {
-	//PB0 in
-	//PB1-5 out
+	DDRB &= ~(1 << PB0); // PB0 in
+	DDRB |= (1 << PB1) | (1 << PB2) | (1 << PB3) | (1 << PB4) | (1 << PB5); // PB1-5 out
+	PORTB = (1 << PB0);
 }
 
-void init_serial()
+ISR(USART_RX_vect)
 {
-	UCSR0B = (1<<RXEN0) | (1<<RXCIE0);
-	UCSROC = (1<<UCSZ01) | (1<<UCSZ00);
-	UBR0L = 0x67;
-	sei;
+	DataIn = UDR0;
 }
 
+int main(void)
+{
+	init_Atmega328P_PORTS();
+	init_serial();
+
+	for(;;)
+	{
+		// Your main loop code here
+	}
+}
