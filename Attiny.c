@@ -1,41 +1,40 @@
-
-#define F_CPU 8000000UL
-#define BAUD_RATE 9600
 #include <avr/io.h>
 #include <util/delay.h>
-#include <string.h>
-#include <stdio.h>
-#include <xc.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
 
-unsigned char DataOut = 0;
+#define BAUD_RATE 9600
+#define F_CPU 8000000UL
 
-void init_serial()
-{
-	UCSR0B = (1 << TXEN0) | (1 << UDRIE0); // EN transmitter data register empty interrupt.
-	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00); // Select 8-bit size.
-	UBRR0L = 0x67; // Config baud rate
-	sei(); // Activate global interrupt system
+volatile uint8_t ObjectID;
+
+void init_UART() {
+	
+	UBRR0L = 0x33; //9600 BAUDRATE
+	UCSR0B = (1<<TXEN0);
+	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00);
 }
 
-void init_Attiny85_PORTS()
+ISR(USART_UDRE_vect) 
 {
-	PORTB = (1 << PB0) | (1 << PB2); // input pins
-	DDRB |= (1 << DDB1) | (1 << DDB5); // output pins
+	UDR0 = ObjectID; 
 }
 
-ISR(USART_UDRE_vect) // Execute when data register is empty.
+ISR(USART_RX_vect) 
 {
-	UDR0 = DataOut; // Sending the data out
+	
 }
 
-int main(void)
+int main(void) 
 {
-	init_Attiny85_PORTS();
-	init_serial();
+	init_UART();
+	sei();
 
-	for(;;)
+	while (1) 
 	{
 		
+		_delay_ms(1000); 
 	}
+
+	return 0;
 }
